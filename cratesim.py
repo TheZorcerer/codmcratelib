@@ -7,6 +7,7 @@ class crate(object):
 		self.epics = dict(epic_dict) #initialize dictionary of epics/dupe protected items
 		self.others = dict(other_dict) #everything else
 		self.unpulled_epics = epic_dict #epics that have not been pulled, that is, all of them at the beginning
+		self.guarenteed_crates = [10,30,60] #which crates have guarenteed epics
 		self.chance_epic = sum(self.epics.values()) #chance to get an epic, this is constant and gets redistributed to remaining epics, since activision says that if a epic is pulled the chance of the other epics increases
 		self.pulls = 0 #pulls done so far
 
@@ -36,7 +37,7 @@ class crate(object):
 
 	def pull_crate(self):
 		self.pulls += 1  # nth pull, starting from 1
-		if(self.pulls in (10,30,60)):  #check if guarenteed epic
+		if(self.pulls in self.guarenteed_crates):  #check if guarenteed epic
 			if(len(self.unpulled_epics) == 0):
 				return self.pull(self.epics)
 			else:
